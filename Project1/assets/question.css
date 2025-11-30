@@ -1,0 +1,217 @@
+/* =========================================================
+   BASE LAYOUT FOR QUIZ / QUESTION PAGE
+   - Works on top of your global styles (style.css)
+   - Focused on question layout, typography & controls
+   ========================================================= */
+
+/* Page container for the quiz card */
+.quiz-page-container {
+    max-width: 900px;
+    margin: 1.5rem auto 2.5rem;
+    padding: 0 1rem;
+}
+
+/* Main quiz card */
+.quiz-card {
+    background: var(--color-surface, #1f2233);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft, 0 4px 18px rgba(0, 0, 0, 0.6));
+    padding: 1.5rem 1.75rem;
+}
+
+/* Title & subtitle */
+.quiz-title {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.5rem;
+    color: var(--color-primary, #4e9fff);
+}
+
+.quiz-subtitle {
+    margin: 0 0 1.25rem 0;
+    font-size: 0.95rem;
+    color: rgba(244, 245, 251, 0.75);
+}
+
+/* Progress (e.g., "Question 1 of 10") */
+.quiz-progress {
+    font-size: 0.95rem;
+    color: rgba(244, 245, 251, 0.85);
+    margin-bottom: 0.75rem;
+}
+
+/* =========================================================
+   QUESTION & OPTIONS
+   ========================================================= */
+
+.quiz-question-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: var(--color-text, #f4f5fb);
+}
+
+/* Container for options list */
+.quiz-options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Each option item */
+.quiz-option-item {
+    margin-bottom: 0.55rem;
+}
+
+/* Label for clickable option row */
+.quiz-option-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.08s ease;
+}
+
+/* Radio input itself */
+.quiz-option-input {
+    margin-top: 0.15rem;
+    accent-color: var(--color-primary, #4e9fff);
+}
+
+/* Option text */
+.quiz-option-text {
+    font-size: 0.97rem;
+    line-height: 1.4;
+    color: var(--color-text, #f4f5fb);
+}
+
+/* Hover & active states */
+.quiz-option-label:hover {
+    background-color: rgba(78, 159, 255, 0.08);
+}
+
+.quiz-option-input:checked + .quiz-option-text {
+    font-weight: 600;
+    color: var(--color-primary, #4e9fff);
+}
+
+/* For keyboard focus: add a subtle outline around selected row */
+.quiz-option-input:focus-visible + .quiz-option-text {
+    outline: 2px solid var(--color-primary, #4e9fff);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   NAVIGATION BUTTONS (Previous / Next / Submit)
+   ========================================================= */
+
+.quiz-nav-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+}
+
+/* Reuse base .btn styles if defined; add quiz-specific tweaks */
+.quiz-btn {
+    border-radius: 999px;
+    padding: 0.55rem 1.35rem;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.quiz-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Primary action (e.g., Submit) */
+.quiz-btn-primary {
+    background: linear-gradient(135deg,
+        var(--color-primary, #4e9fff),
+        var(--color-accent, #ff6fb5)
+    );
+    color: #ffffff;
+}
+
+/* Secondary actions (Prev / Next) */
+.quiz-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--color-primary, #4e9fff);
+    color: var(--color-primary, #4e9fff);
+}
+
+/* Hover effects */
+.quiz-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft, 0 4px 18px rgba(0, 0, 0, 0.6));
+}
+
+.quiz-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* =========================================================
+   TIMER BADGE (OPTIONAL PER-QUESTION TIMER INSIDE CARD)
+   ========================================================= */
+
+.quiz-timer-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(78, 159, 255, 0.15);
+    color: var(--color-text, #f4f5fb);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+/* =========================================================
+   RESPONSIVE BEHAVIOR
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .quiz-card {
+        padding: 1.1rem 1.1rem;
+    }
+
+    .quiz-title {
+        font-size: 1.3rem;
+    }
+
+    .quiz-nav-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .quiz-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .quiz-page-container {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .quiz-question-text {
+        font-size: 1rem;
+    }
+}
