@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Event Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        /* Styling the Marquee specifically */
+        .news-ticker {
+            background-color: #000000; /* Pure black for ticker */
+            color: #4CAF50; /* Green text for contrast */
+            padding: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        /* Styling the Table specifically for Dark Mode */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #2c2c2c; /* Dark table background */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #444; /* Darker border lines */
+            color: #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Hover effect must be dark grey, not light grey */
+        tr:hover {
+            background-color: #3e3e3e; 
+        }
+
+        /* Button Styling (Internal) */
+        button {
+            cursor: pointer;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="news-ticker">
+        <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+            📢 Notice: Workshop Registration ends this Friday! | New Seminars added to the Routine.
+        </marquee>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>University Event Registration</h1>
+            <p>Welcome to the official portal.</p>
+        </header>
+
+        <div>
+            <img id="bannerImage" src="https://picsum.photos/800/250?random=1" alt="Banner" class="banner-img">
+        </div>
+
+        <hr>
+
+        <div class="form-section">
+            <h2>Join the Event</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    <small>Must be a valid email format.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number:</label>
+                    <input type="tel" id="mobile" name="mobile" placeholder="1234567890" required>
+                    <small>10 digits only.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Enter your address..."></textarea>
+                    <small>No special characters allowed.</small>
+                </div>
+
+                <button type="submit" style="background-color: black; width: 100%; margin-top: 10px; font-weight: bold;">
+                    Register Now
+                </button>
+            </form>
+        </div>
+
+        <div class="routine-section">
+            <h2>Event Routine</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Activity</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>09:00 AM</td>
+                        <td>Inauguration Ceremony</td>
+                        <td>A.P.J. Abdul Kalam Auditorium</td>
+                    </tr>
+                    <tr>
+                        <td>11:00 AM</td>
+                        <td>Web Dev Workshop</td>
+                        <td>AICTE Lab, Dept. of Computer Science and Engineering</td>
+                    </tr>
+                    <tr>
+                        <td>02:00 PM</td>
+                        <td>Lunch Break</td>
+                        <td>University Canteen [Tridha]</td>
+                    </tr>
+                    <tr>
+                        <td>03:00 PM</td>
+                        <td>Closing Ceremony</td>
+                        <td>Seminer Hall, Dept. of Computer Science and Engineering</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <button id="bgBtn" style="background-color: black; font-weight: bold;">
+                Click me to Change Background Color (jQuery)
+            </button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

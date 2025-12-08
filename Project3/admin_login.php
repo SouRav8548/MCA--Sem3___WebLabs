@@ -6,7 +6,7 @@ $email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
-    $pass  = $_POST['password'] ?? '';
+    $pass = $_POST['password'] ?? '';
 
     if ($email === '' || $pass === '') {
         $errors[] = 'Email and password are required.';
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($admin && password_verify($pass, $admin['password_hash'])) {
             unset($admin['password_hash']);
             $_SESSION['user'] = $admin;
-            header('Location: admin/questions.php');
+            header('Location: questions.php');
             exit;
         } else {
             $errors[] = 'Invalid admin credentials.';

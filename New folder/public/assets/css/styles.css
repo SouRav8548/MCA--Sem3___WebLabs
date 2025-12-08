@@ -1,0 +1,62 @@
+:root {
+  --bg: #0b1221;
+  --panel: #07121b;
+  --text: #dfefff;
+  --accent: #1e90ff;
+  --muted: #9fb9d9;
+}
+[data-theme="light"] {
+  --bg: #f5f8ff;
+  --panel: #ffffff;
+  --text: #0b1221;
+  --accent: #0a66ff;
+  --muted: #6b7b8e;
+}
+body {
+  background: linear-gradient(180deg, var(--bg), #000000);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  margin: 0;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--panel);
+}
+.app-shell {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 12px;
+}
+.calc-panel,
+.converter-panel {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px;
+  border-radius: 12px;
+  margin: 8px 0;
+}
+button {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 0;
+  background: var(--accent);
+  color: white;
+  margin: 4px;
+  cursor: pointer;
+}
+input,
+select,
+textarea {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: transparent;
+  color: var(--text);
+}
+@media (max-width: 700px) {
+  .app-shell {
+    padding: 8px;
+  }
+}
