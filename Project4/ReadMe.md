@@ -1,3 +1,5 @@
+                                                                                                                                                                                                                                                                                                                                                                                        https://gemini.google.com/share/49e8add86e13
+
 htdocs/
 └── marksheet_portal/
 │
@@ -49,3 +51,43 @@ Missing Table: You haven't imported the database.sql file, so the table students
         Wrong Column Names: The PHP code is trying to save to a column (like photo) that isn't in your database table.
 
         Typo: There is a spelling mistake in your SQL query string.
+
+---
+
+---
+
+---
+
+Generate a complete website for a MARKSHEET DOWNLOAD PORTAL using HTML, CSS (based on glass blue and black theme), and PHP on XAMPP. The website should include the following features:
+
+1. **Admin Portal:**
+
+   - Secure login for admin users.
+
+   - A web interface displaying a table structure where admins can enter, edit, and manage student marks.
+
+   - Ability to add new student records with fields like Student ID, Name, Subject-wise marks, and overall grade.
+
+   - Validation for data input to ensure accuracy.
+
+   - Option to export or backup marks data.
+
+2. **User/Student Portal:**
+
+   - Student in their profilr section edit all personal information including photo, also these personal information entry in their registration.
+
+   - When student in their dashboard section then also view their picture with stylish(unique) view.
+
+   - Secure login for students to access their individual marksheet.
+
+   - Display the marksheet in a clear, readable tabuler format with all subjects and total marks, table also edit with unique stylish css.
+
+   - Provide options to download the marksheet in multiple formats, such as PDF(recommended) and Excel(optional).
+
+   - Responsive design for accessibility on various devices.
+
+Ensure proper session management and security measures throughout the site. Use clean, well-commented code with modular structure separating HTML, CSS, and PHP files.
+
+This web by default in dark mode in navbar have a toogle button.
+
+At the end, provide all final files organized in appropriate folders ready for deployment.
