@@ -13,6 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let isScientific = false;
   let currentExp = "";
 
+  // --- DEGREE CONVERSION HELPERS ---
+  // These take Degrees, convert to Radians, then run the Math function.
+  // Example: sin(90) -> Math.sin(90 * PI/180) -> 1
+  const sinDeg = (deg) => Math.sin(deg * (Math.PI / 180));
+  const cosDeg = (deg) => Math.cos(deg * (Math.PI / 180));
+  const tanDeg = (deg) => Math.tan(deg * (Math.PI / 180));
+
   const basicKeys = [
     "C",
     "DEL",
@@ -95,9 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         // Safe evaluation replacement
         let evalString = currentExp
-          .replace(/sin/g, "Math.sin")
-          .replace(/cos/g, "Math.cos")
-          .replace(/tan/g, "Math.tan")
+          // UPDATED: Use custom degree functions instead of Math.sin/cos/tan
+          .replace(/sin/g, "sinDeg")
+          .replace(/cos/g, "cosDeg")
+          .replace(/tan/g, "tanDeg")
+          // Standard Math replacements
           .replace(/log/g, "Math.log10")
           .replace(/ln/g, "Math.log")
           .replace(/sqrt/g, "Math.sqrt")
@@ -107,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!evalString) return;
 
+        // eval() will now look for sinDeg() which handles the conversion
         const result = eval(evalString);
 
         // Handle infinity or NaN
@@ -114,6 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
           display.value = "Error";
           currentExp = "";
         } else {
+          // Optional: Fix floating point precision for common angles
+          // e.g. sin(180) might return 1.22e-16 instead of 0 without rounding
+          // We keep it raw here for accuracy, or you can add .toFixed(10) logic if preferred.
           display.value = result;
           currentExp = String(result);
         }
@@ -126,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Standard Input
     if (display.value === "0" || display.value === "Error") {
-      // If starting with operator, keep 0? No, usually replace unless operator
       if (!["+", "-", "*", "/", "%", "."].includes(key)) currentExp = "";
     }
 
@@ -134,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (["sin", "cos", "tan", "log", "ln", "sqrt", "abs"].includes(key)) {
       currentExp += key + "(";
     } else if (key === "pi") {
-      currentExp += "pi"; // handled in eval logic above
+      currentExp += "pi";
     } else {
       currentExp += key;
     }

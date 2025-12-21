@@ -1,0 +1,375 @@
+/* =========================================
+   1. THEME VARIABLES
+   ========================================= */
+:root {
+  /* --- DARK MODE (Default) --- */
+  /* Backgrounds */
+  --bg-color: #0f0f0f; /* Deep Black */
+  --card-bg: #1a1a1a; /* Dark Grey */
+  --navbar-bg: #141414;
+
+  /* Text Colors */
+  --text-primary: #d2691e; /* Chocolate Brown */
+  --text-secondary: #3924dd; /* Peru Brown */
+  --text-muted: #8b4513; /* Saddle Brown (Dimmed) */
+
+  /* Borders & Accents */
+  --border: #333333;
+  --accent: #8b4513; /* Saddle Brown */
+  --accent-hover: #a0522d; /* Sienna */
+
+  /* Functional Colors */
+  --white: #ffffff;
+  --success: #2e8b57; /* Sea Green (for approvals) */
+  --danger: #b22222; /* Firebrick (for logout/delete) */
+  --shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] {
+  /* --- LIGHT MODE --- */
+  /* Backgrounds */
+  --bg-color: #f4f7f6; /* Very Light Grey */
+  --card-bg: #ffffff; /* Pure White */
+  --navbar-bg: #ffffff;
+
+  /* Text Colors */
+  --text-primary: #000080; /* Navy Blue */
+  --text-secondary: #ff0000; /* Medium Blue */
+  --text-muted: #4682b4; /* Steel Blue */
+
+  /* Borders & Accents */
+  --border: #d1d9e6;
+  --accent: #000080; /* Navy Blue */
+  --accent-hover: #4169e1; /* Royal Blue */
+
+  /* Functional Colors */
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   2. GLOBAL RESET
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent);
+  transition: 0.2s;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+ul {
+  list-style: none;
+}
+
+/* =========================================
+   3. LAYOUT & NAVBAR
+   ========================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--navbar-bg);
+  border-bottom: 3px solid var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.navbar h1,
+.navbar h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.navbar div {
+  display: flex;
+  gap: 10px;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   4. CARDS & SECTIONS
+   ========================================= */
+.card {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: transform 0.2s;
+}
+
+/* Hover effect on cards for better interactivity */
+.card:hover {
+  border-color: var(--accent);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   5. FORMS & INPUTS
+   ========================================= */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: -10px;
+  display: block;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+}
+
+/* File Upload Input */
+input[type="file"] {
+  padding: 10px;
+  border: 1px dashed var(--accent);
+  background-color: var(--card-bg);
+  cursor: pointer;
+}
+
+/* Registration Form Sections */
+.form-section {
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.form-section legend {
+  color: var(--accent);
+  font-weight: bold;
+  padding: 0 10px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   6. BUTTONS
+   ========================================= */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--accent);
+  color: var(--white);
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background 0.3s, transform 0.1s;
+  text-align: center;
+  display: inline-block;
+}
+
+.btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   7. TABLES
+   ========================================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+th {
+  background-color: var(--accent);
+  color: var(--white);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+tr:hover {
+  background-color: rgba(139, 69, 19, 0.1); /* Slight brown tint on hover */
+}
+
+/* =========================================
+   8. PROFILE PAGE STYLES
+   ========================================= */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--accent);
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+.account-badge {
+  background: var(--accent);
+  color: var(--white);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* =========================================
+   9. UTILITIES
+   ========================================= */
+.status-pending {
+  color: orange;
+  font-weight: bold;
+}
+.status-approved {
+  color: var(--success);
+  font-weight: bold;
+}
+.status-rejected {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+/* Print Logic for PDF simulation */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #certificate,
+  #certificate * {
+    visibility: visible;
+  }
+  #certificate {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none;
+  }
+}
+
+/* =========================================
+   10. ADDITIONAL STYLES
+   ========================================= */
+.error-message {
+  color: var(--danger);
+  background: rgba(178, 34, 34, 0.1);
+  padding: 10px;
+  border: 1px solid var(--danger);
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.success-message {
+  color: var(--success);
+  background: rgba(46, 139, 87, 0.1);
+  padding: 10px;
+  border: 1px solid var(--success);
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.loading-spinner {
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .navbar h1,
+  .navbar h2 {
+    font-size: 1.2rem;
+  }
+  .btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+/* End of style.css */

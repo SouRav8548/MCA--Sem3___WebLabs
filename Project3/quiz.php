@@ -5,10 +5,10 @@ require_login();
 
 // how many questions per attempt and time limit (seconds per question)
 $limit = 10;
-$perQuestionSeconds = 20; // You can change this value later
+$perQuestionSeconds = 20;
 
 $stmt = $pdo->prepare('SELECT * FROM questions ORDER BY RAND() LIMIT ?');
-$stmt->bindValue(1, (int)$limit, PDO::PARAM_INT);
+$stmt->bindValue(1, (int) $limit, PDO::PARAM_INT);
 $stmt->execute();
 $questions = $stmt->fetchAll();
 
@@ -24,28 +24,35 @@ $stmt = $pdo->prepare('INSERT INTO quiz_attempts (user_id, total_questions) VALU
 $stmt->execute([$_SESSION['user']['id'], count($questions)]);
 $attemptId = $pdo->lastInsertId();
 
-// Save question IDs in session for later result checking
+// Save question IDs in session
 $_SESSION['current_attempt_id'] = $attemptId;
 $_SESSION['current_attempt_question_ids'] = array_column($questions, 'id');
 
 include 'header.php';
 ?>
+
+<style>
+    .question-slide {
+        display: none;
+    }
+
+    .question-slide.active {
+        display: block;
+    }
+</style>
+
 <div class="card">
     <h1>Quiz</h1>
-    <p id="questionIndicator"></p>
+    <p id="questionIndicator">Question 1 of <?php echo count($questions); ?></p>
 
-    <!-- data-per-question-seconds is read by JS to control timer per question -->
-    <form id="quizForm"
-          method="post"
-          action="submit_quiz.php"
-          data-per-question-seconds="<?php echo (int)$perQuestionSeconds; ?>">
+    <form id="quizForm" method="post" action="submit_quiz.php"
+        data-per-question-seconds="<?php echo (int) $perQuestionSeconds; ?>">
         <input type="hidden" name="attempt_id" value="<?php echo htmlspecialchars($attemptId); ?>">
 
         <?php foreach ($questions as $index => $q): ?>
-            <!-- Each question is a "slide"; JS will show/hide and manage timer -->
             <div class="question-slide<?php echo $index === 0 ? ' active' : ''; ?>">
                 <div class="quiz-question">
-                    <h3>
+                    <h3 style="white-space: pre-wrap;">
                         <?php echo 'Q' . ($index + 1) . '. ' . htmlspecialchars($q['question_text']); ?>
                     </h3>
                 </div>
@@ -54,9 +61,7 @@ include 'header.php';
                         <?php $field = 'option_' . strtolower($opt); ?>
                         <li>
                             <label>
-                                <input type="radio"
-                                       name="answers[<?php echo $q['id']; ?>]"
-                                       value="<?php echo $opt; ?>">
+                                <input type="radio" name="answers[<?php echo $q['id']; ?>]" value="<?php echo $opt; ?>">
                                 <span><?php echo htmlspecialchars($q[$field]); ?></span>
                             </label>
                         </li>
@@ -66,52 +71,65 @@ include 'header.php';
         <?php endforeach; ?>
 
         <div style="display:flex; justify-content:space-between; margin-top:1rem; gap:0.5rem; flex-wrap:wrap;">
-            <button type="button" id="prevQuestion" class="btn btn-secondary">Previous</button>
+            <button type="button" id="prevQuestion" class="btn btn-secondary" style="display:none;">Previous</button>
             <button type="button" id="nextQuestion" class="btn btn-secondary">Next</button>
-            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="display:none;">Submit Quiz</button>
         </div>
     </form>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const slides = document.querySelectorAll('.question-slide');
+        const prevBtn = document.getElementById('prevQuestion');
+        const nextBtn = document.getElementById('nextQuestion');
+        const submitBtn = document.getElementById('submitBtn');
+        const indicator = document.getElementById('questionIndicator');
+        let currentStep = 0;
 
+        function updateView() {
+            // Hide all slides
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentStep) slide.classList.add('active');
+            });
 
-<div class="quiz-page-container">
-    <div class="quiz-card">
-        <h1 class="quiz-title">Quiz</h1>
-        <p class="quiz-subtitle">Answer each question before the timer runs out.</p>
+            // Update Question Indicator
+            indicator.textContent = `Question ${currentStep + 1} of ${slides.length}`;
 
-        <p id="questionIndicator" class="quiz-progress"></p>
+            // Button Visibility
+            if (currentStep === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'inline-block';
+            }
 
-        <form id="quizForm" method="post" action="submit_quiz.php">
-            <!-- question slide -->
-            <div class="question-slide active">
-                <p class="quiz-question-text">
-                    What is the capital of France?
-                </p>
-                <ul class="quiz-options-list">
-                    <li class="quiz-option-item">
-                        <label class="quiz-option-label">
-                            <input class="quiz-option-input" type="radio" name="answers[1]" value="A">
-                            <span class="quiz-option-text">Paris</span>
-                        </label>
-                    </li>
-                    <!-- other options -->
-                </ul>
-            </div>
+            if (currentStep === slides.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
 
-            <div class="quiz-nav-row">
-                <button type="button" id="prevQuestion" class="quiz-btn quiz-btn-secondary">
-                    Previous
-                </button>
-                <button type="button" id="nextQuestion" class="quiz-btn quiz-btn-secondary">
-                    Next
-                </button>
-                <button type="submit" class="quiz-btn quiz-btn-primary">
-                    Submit Quiz
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+        nextBtn.addEventListener('click', function () {
+            if (currentStep < slides.length - 1) {
+                currentStep++;
+                updateView();
+            }
+        });
+
+        prevBtn.addEventListener('click', function () {
+            if (currentStep > 0) {
+                currentStep--;
+                updateView();
+            }
+        });
+
+        // Initialize view
+        updateView();
+    });
+</script>
 
 <?php include 'footer.php'; ?>
