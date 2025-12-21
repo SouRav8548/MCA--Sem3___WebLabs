@@ -12,7 +12,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>Quiz Platform</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="question.css">
 
 </head>
@@ -49,9 +48,11 @@ if (session_status() === PHP_SESSION_NONE) {
                     <span id="quizTimerDisplay">20</span>
                 </li>
 
-                <li>
-                    <button type="button" id="themeToggle" class="icon-btn" title="Toggle light/dark">🌙</button>
-                </li>
+                <!-- <li>
+                    <button id="themeToggle" class="icon-btn">
+                        🌙 Dark Mode
+                    </button>
+                </li> -->
             </ul>
         </nav>
     </header>

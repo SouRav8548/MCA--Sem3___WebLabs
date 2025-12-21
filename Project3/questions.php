@@ -6,7 +6,7 @@ $errors = [];
 $success = '';
 $id = $_GET['id'] ?? null;
 $editing = false;
-
+// Initialize empty question data
 $question = [
     'question_text' => '',
     'option_a' => '',
@@ -15,7 +15,7 @@ $question = [
     'option_d' => '',
     'correct_option' => 'A',
 ];
-
+// Handle form submission for adding/editing questions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'] ?: null;
 
@@ -32,10 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
         }
     }
+    // Validate correct option
 
     if (!in_array($question['correct_option'], ['A', 'B', 'C', 'D'], true)) {
         $errors[] = 'Correct option must be A, B, C, or D.';
     }
+    // If no errors, insert or update the question
 
     if (!$errors) {
         if ($id) {
@@ -111,8 +113,7 @@ if (!empty($_SESSION['user']['id'])) {
 include 'header.php';
 // include '../assets/question.css';
 ?>
-<!-- <link rel="stylesheet" href="../assets/question.css"> -->
-
+<!-- Question Form Section -->
 <div class="card">
     <h1><?php echo $editing ? 'Edit Question' : 'Add New Question'; ?></h1>
 
@@ -126,7 +127,7 @@ include 'header.php';
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
-
+    <!-- Question Form -->
     <form method="post">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($id ?? ''); ?>">
 

@@ -7,8 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['attempt_id'])) {
     exit;
 }
 
-$attemptId = (int)$_POST['attempt_id'];
-$answers   = $_POST['answers'] ?? [];
+$attemptId = (int) $_POST['attempt_id'];
+$answers = $_POST['answers'] ?? [];
 
 // Ensure attempt belongs to user
 $stmt = $pdo->prepare('SELECT * FROM quiz_attempts WHERE id = ? AND user_id = ?');
@@ -18,13 +18,14 @@ if (!$attempt) {
     header('Location: index.php');
     exit;
 }
+// Ensure attempt not already completed
 
 $questionIds = $_SESSION['current_attempt_question_ids'] ?? [];
 if (!$questionIds) {
     header('Location: index.php');
     exit;
 }
-
+// Fetch questions for grading 
 $placeholders = implode(',', array_fill(0, count($questionIds), '?'));
 $stmt = $pdo->prepare("SELECT * FROM questions WHERE id IN ($placeholders)");
 $stmt->execute($questionIds);
@@ -33,16 +34,18 @@ $questionById = [];
 foreach ($questions as $q) {
     $questionById[$q['id']] = $q;
 }
+// Grade answers
 
 $score = 0;
 $total = count($questionIds);
 $storedAnswers = [];
-
+// process each question
 foreach ($questionIds as $qid) {
     $selected = $answers[$qid] ?? null;
-    $correct  = $questionById[$qid]['correct_option'] ?? null;
+    $correct = $questionById[$qid]['correct_option'] ?? null;
     $isCorrect = $selected && $selected === $correct ? 1 : 0;
-    if ($isCorrect) $score++;
+    if ($isCorrect)
+        $score++;
 
     $storedAnswers[] = [
         'question_id' => $qid,
@@ -84,20 +87,21 @@ include 'header.php';
         <?php $q = $questionById[$qid]; ?>
         <?php
         $selected = $answers[$qid] ?? null;
-        $correct  = $q['correct_option'];
+        $correct = $q['correct_option'];
         $userCorrect = $selected && $selected === $correct;
         ?>
         <div style="margin-bottom:1rem;">
             <p><strong><?php echo 'Q' . ($index + 1) . '. ' . htmlspecialchars($q['question_text']); ?></strong></p>
             <ul class="quiz-options">
-                <?php foreach (['A','B','C','D'] as $opt): ?>
+                <?php foreach (['A', 'B', 'C', 'D'] as $opt): ?>
                     <?php
                     $field = 'option_' . strtolower($opt);
                     $isCorrect = $opt === $correct;
                     $isSelected = $opt === $selected;
                     ?>
                     <li>
-                        <span class="<?php echo $isCorrect ? 'correct-answer' : ($isSelected && !$isCorrect ? 'incorrect-answer' : ''); ?>">
+                        <span
+                            class="<?php echo $isCorrect ? 'correct-answer' : ($isSelected && !$isCorrect ? 'incorrect-answer' : ''); ?>">
                             <?php echo $opt; ?>. <?php echo htmlspecialchars($q[$field]); ?>
                             <?php if ($isCorrect): ?> (Correct)<?php endif; ?>
                             <?php if ($isSelected && !$isCorrect): ?> (Your choice)<?php endif; ?>

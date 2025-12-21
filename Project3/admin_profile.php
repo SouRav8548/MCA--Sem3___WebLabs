@@ -22,25 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $dob = trim($_POST['dob'] ?? '');
-
+    // Validate name
     if ($name === '') {
         $errors[] = 'Full name is required.';
     }
-
+    // Validate email
     if ($email === '') {
         $errors[] = 'Email is required.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Invalid email format.';
     }
-
+    // Validate phone (simple pattern)
     if ($phone !== '' && !preg_match('/^[0-9+\-\s]{7,20}$/', $phone)) {
         $errors[] = 'Phone number format is invalid.';
     }
-
+    // Validate date of birth
     if ($dob !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $dob)) {
         $errors[] = 'Date of birth must be in YYYY-MM-DD format.';
     }
-
     // unique email among all users except this admin
     if (!$errors) {
         $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ? AND id <> ?');
@@ -49,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = 'This email address is already in use.';
         }
     }
-
+    // If no errors, update admin info
     if (!$errors) {
         $stmt = $pdo->prepare('UPDATE users SET name = ?, email = ?, phone = ?, dob = ? WHERE id = ?');
         $stmt->execute([$name, $email, $phone ?: null, $dob ?: null, $adminId]);
