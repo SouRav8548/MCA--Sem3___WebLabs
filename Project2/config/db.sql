@@ -1,7 +1,6 @@
 -- Run this in phpMyAdmin
 CREATE DATABASE IF NOT EXISTS Calculator;
 USE Calculator;
-
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,

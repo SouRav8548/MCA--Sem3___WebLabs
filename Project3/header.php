@@ -44,9 +44,9 @@ if (session_status() === PHP_SESSION_NONE) {
                 <?php endif; ?>
 
                 <!-- Timer (for quiz), shown/hidden by JS -->
-                <li class="timer-item" id="timerWrapper">
+                <!-- <li class="timer-item" id="timerWrapper">
                     <span id="quizTimerDisplay">20</span>
-                </li>
+                </li> -->
 
                 <!-- <li>
                     <button id="themeToggle" class="icon-btn">

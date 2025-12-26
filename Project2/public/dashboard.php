@@ -2,12 +2,10 @@
 require_once __DIR__ . '/../config/db.php';
 include 'partials/header.php';
 include 'partials/nav.php';
-
 if (empty($_SESSION['user'])) {
     header('Location: login.php');
     exit;
 }
-
 // Session Timeout (30 mins)
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
     session_unset();

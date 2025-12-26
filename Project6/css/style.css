@@ -1,0 +1,140 @@
+:root {
+  /* DARK MODE (Default) */
+  --bg-color: #0f0f0f;
+  --card-bg: #1a1a1a;
+  --navbar-bg: #141414;
+  --text-primary: #d2691e;
+  --text-secondary: #cd853f;
+  --border: #333333;
+  --accent: #8b4513;
+  --white: #ffffff;
+  --success: #2e8b57;
+  --danger: #b22222;
+}
+
+[data-theme="light"] {
+  --bg-color: #f4f7f6;
+  --card-bg: #ffffff;
+  --navbar-bg: #ffffff;
+  --text-primary: #000080;
+  --text-secondary: #0000cd;
+  --border: #d1d9e6;
+  --accent: #000080;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: "Segoe UI", sans-serif;
+  transition: 0.3s;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--navbar-bg);
+  border-bottom: 3px solid var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.card {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 6px rgba(221, 38, 38, 0.1);
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.form-section {
+  border: 1px solid var(--border);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+.form-section legend {
+  color: var(--accent);
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 4px;
+}
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--accent);
+  color: var(--white);
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+}
+.btn:hover {
+  opacity: 0.5;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+th {
+  background-color: var(--accent);
+  color: var(--white);
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+/* Instrument Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printableArea,
+  #printableArea * {
+    visibility: visible;
+  }
+  #printableArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

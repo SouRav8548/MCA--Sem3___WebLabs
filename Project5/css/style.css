@@ -1,0 +1,102 @@
+:root {
+  /* Light Theme Variables */
+  --bg-color: #f4f4f9;
+  --text-color: #333;
+  --card-bg: #ffffff;
+  --nav-bg: #007bff;
+  --nav-text: #ffffff;
+  --btn-bg: #007bff;
+  --btn-text: #ffffff;
+  --input-border: #ccc;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Variables */
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --nav-bg: #333333;
+  --nav-text: #ffffff;
+  --btn-bg: #bb86fc;
+  --btn-text: #000000;
+  --input-border: #555;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--nav-bg);
+  color: var(--nav-text);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#theme-toggle {
+  background: transparent;
+  border: 1px solid var(--nav-text);
+  color: var(--nav-text);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.card {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+/* Form Elements */
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid var(--input-border);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-color);
+}
+
+.btn-submit {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  border-left: 5px solid var(--btn-bg);
+}

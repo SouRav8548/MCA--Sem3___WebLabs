@@ -2,47 +2,31 @@
 require_once __DIR__ . '/../config/db.php';
 include 'partials/header.php';
 include 'partials/nav.php';
-
 $errors = [];
 $success = '';
-
-// Initialize variables to keep form data if there is an error
 $name = '';
 $email = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
     $password = $_POST['password'] ?? '';
     $name = trim($_POST['name'] ?? '');
-
     if (!$email)
         $errors[] = 'Valid email required.';
-
-    // Password strength validation
     if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/\d/', $password)) {
         $errors[] = 'Password must be 8+ chars (1 upper, 1 lower, 1 number).';
     }
-
     if (empty($name))
         $errors[] = 'Name required.';
-
     if (!$errors) {
-        // Check if email exists
         $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ? LIMIT 1');
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
             $errors[] = 'Email already taken.';
         } else {
-            // --- SECURITY FIX: Hash the password ---
-            // NEVER store plain text passwords.
             $hash = password_hash($password, PASSWORD_DEFAULT);
-
-            // Insert user
             $stmt = $pdo->prepare('INSERT INTO users (email, password_hash, name, verified) VALUES (?, ?, ?, 1)');
-
             if ($stmt->execute([$email, $hash, $name])) {
                 $success = "Account created successfully! <a href='login.php' style='color: var(--primary); font-weight: bold; text-decoration: underline;'>Login Now</a>";
-                // Clear variables so the form empties on success
                 $name = '';
                 $email = '';
             } else {

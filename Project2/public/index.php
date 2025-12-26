@@ -4,7 +4,7 @@ include 'partials/nav.php';
 ?>
 <div class="container">
     <div class="card" style="text-align: center; padding: 4rem 2rem;">
-        <h1 class="card-title" style="font-size: 3rem;">SmartTools Suite</h1>
+        <h1 class="card-title" style="font-size: 3rem;">Smart [CC] Tools </h1>
         <p style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2rem;">
             A secure, modern suite of utilities featuring scientific calculators and multi-unit converters.
         </p>
