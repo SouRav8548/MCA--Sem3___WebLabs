@@ -1,15 +1,5 @@
 <?php
 include '../config/db_connect.php';
-// if (isset($_POST['register'])) {
-//     echo "<h3>DEBUG MODE</h3>";
-//     echo "Received Password: " . $_POST['password'] . "<br>";
-
-//     $test_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-//     echo "Generated Hash: " . $test_hash . "<br>";
-
-//     // Stop here to inspect
-//     exit();
-// }
 if (isset($_POST['register'])) {
     $name = $_POST['name'];
     $roll_no = $_POST['roll_no'];

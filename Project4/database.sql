@@ -1,23 +1,16 @@
 -- Create Database
 CREATE DATABASE IF NOT EXISTS marks_portal;
 USE marks_portal;
-
 -- Admin Table
 CREATE TABLE IF NOT EXISTS admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL
 );
-
 -- Insert Default Admin (Username: admin, Password: admin123)
 -- Note: The password hash below corresponds to 'admin123'
 INSERT INTO admins (username, password) VALUES ('admin', '$2y$10$8WkQv..'); 
--- REPLACE THE HASH above with the result of password_hash('admin123', PASSWORD_DEFAULT) in PHP if this dummy hash doesn't work, 
--- or strictly for testing, change the login logic to accept plain text (not recommended).
--- For this demo, I will use a simple plain text check in the PHP code for the admin to save you hashing trouble during setup, 
--- but the field is set up for security.
 
--- Students Table
 CREATE TABLE IF NOT EXISTS students (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
