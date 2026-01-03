@@ -113,6 +113,76 @@ if (isset($_POST['deposit_money'])) {
     }
 }
 
+// 4A. CASH DEPOSIT or Withdraw By MANAGER into Staff Account (Legacy/Alternative Method)
+if (isset($_POST['manage_staff_funds'])) {
+    // 1. Debugging: Check if we are receiving data
+    if (!isset($_POST['staff_id']) || !isset($_POST['amount'])) {
+        die("Error: Missing Data in Form Submission");
+    }
+
+    // 2. Security: Check role
+    if (!isset($_SESSION['role']) || $_SESSION['role'] != 'manager') {
+        die("Access Denied: You are not a manager.");
+    }
+
+    $manager_id = $_SESSION['user_id']; // Use Manager ID to fix NULL errors
+    $staff_id = $_POST['staff_id'];
+    $amount = floatval($_POST['amount']);
+    $action = $_POST['action'];
+
+    // 3. Database: Fetch user safely
+    $query = $conn->query("SELECT * FROM users WHERE id='$staff_id' AND role='staff'");
+
+    if (!$query) {
+        die("Database Query Failed (Select Staff): " . $conn->error);
+    }
+
+    if ($query->num_rows > 0) {
+        $staff = $query->fetch_assoc();
+        $current_balance = floatval($staff['balance']);
+        $staff_name = $staff['name'];
+
+        if ($action == 'load') {
+            $new_balance = $current_balance + $amount;
+
+            // Execute Update
+            if (!$conn->query("UPDATE users SET balance = '$new_balance' WHERE id='$staff_id'")) {
+                die("Update Failed: " . $conn->error);
+            }
+
+            // FIX: Sender = Manager ($manager_id), Receiver = Staff ($staff_id)
+            if (!$conn->query("INSERT INTO transactions (sender_id, receiver_id, amount, type) VALUES ('$manager_id', '$staff_id', '$amount', 'cash_deposit')")) {
+                die("Transaction Log Failed (Check ENUM types): " . $conn->error);
+            }
+
+            echo "<script>alert('Successfully loaded ₹$amount to $staff_name'); window.location='manager_dashboard.php';</script>";
+        } elseif ($action == 'collect') {
+            if ($current_balance >= $amount) {
+                $new_balance = $current_balance - $amount;
+
+                if (!$conn->query("UPDATE users SET balance = '$new_balance' WHERE id='$staff_id'")) {
+                    die("Update Failed: " . $conn->error);
+                }
+
+                // FIX: Sender = Staff ($staff_id), Receiver = Manager ($manager_id)
+                // This prevents 'receiver_id cannot be null' error
+                if (!$conn->query("INSERT INTO transactions (sender_id, receiver_id, amount, type) VALUES ('$staff_id', '$manager_id', '$amount', 'cash_withdrawal')")) {
+                    die("Transaction Log Failed (Check ENUM types): " . $conn->error);
+                }
+
+                echo "<script>alert('Successfully collected ₹$amount from $staff_name'); window.location='manager_dashboard.php';</script>";
+            } else {
+                echo "<script>alert('Insufficient float balance with staff!'); window.location='manager_dashboard.php';</script>";
+            }
+        } else {
+            echo "<script>alert('Invalid Action Selected'); window.location='manager_dashboard.php';</script>";
+        }
+    } else {
+        echo "<script>alert('Staff member not found!'); window.location='manager_dashboard.php';</script>";
+    }
+}
+
+
 // 5. CREATE FD (FIXED)
 if (isset($_POST['create_fd'])) {
     $uid = $_SESSION['user_id'];
