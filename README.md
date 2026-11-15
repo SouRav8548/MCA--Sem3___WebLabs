@@ -4,7 +4,7 @@ A collection of seven web-development exercises for the **MCA third semester at 
 
 **Maintainer:** Sourav Maity · **Personal brand:** xCODER
 
-> These are educational prototypes for local development. The banking and marksheet applications are demonstrations, not real financial or institutional services. This README is based on source inspection of `Web-Project-main.zip`; the applications have not been run or integration-tested as part of this documentation work.
+> These are educational prototypes for local development. The banking and marksheet applications are demonstrations, not real financial or institutional services. The applications have not been run or integration-tested as part of this documentation work.
 
 ## 🎯 Learning goals
 
